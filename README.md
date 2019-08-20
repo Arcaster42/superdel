@@ -28,6 +28,10 @@ git push origin <branch>
 ```
 Make the pull request
 
+## Commits
+
+Please provide comments for all your commits, and do not lump one comment in with multiple files if they are not strictly related. You can use VS Code source control options to provide commit comments for each individual file conveniently so that every commit is described accurately.
+
 ## Pull Requests
 
 Before you make a PR, please pull from the root master to prevent any conflicts. Leave thorough details in the comment of the PR describing what is changed and why it is changed, especially if it is code done by someone else. At least two people should review a PR before merging, but one is sufficient when working remotely. Do not be afraid to request changes on a code review.
