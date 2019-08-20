@@ -8,7 +8,7 @@
           </b-form-group>
           <div class="text-center">
             <b-button type="submit" variant="primary" block>Sign In</b-button>
-            <b-button variant="link" @click="$emit('swap-form')">Sign Up?</b-button>
+            <b-button variant="outline-info mt-4" @click="$emit('swap-form')">Sign Up?</b-button>
           </div>
         </b-form>
 </template>
