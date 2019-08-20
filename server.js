@@ -7,7 +7,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 const {
-    registerUser
+    registerUser, 
+    loginUser
 } = require('./queries')
 
 app.post('/api/users', (req, res) => {
@@ -18,7 +19,8 @@ app.post('/api/users', (req, res) => {
 
 app.get('/api/login', (req, res) => {
     const userObj = req.query
-
+    loginUser(userObj)
+    .then((results) => res.send(results))
 })
 
-app.listen(port, () => {console.log(`App listening on ${port}`)})
+app.listen(port, () => { console.log(`App listening on ${port}`) })
