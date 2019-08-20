@@ -1,4 +1,12 @@
-# superdel
+# SuperDel Project
+
+## Branches
+
+Please work on branches separate from the master and request merges from there. Name your branch relevant to your role (i.e., frontend).
+
+## Pull Requests
+
+Before you make a PR, please pull from the root master to prevent any conflicts.
 
 ## Project setup
 ```
