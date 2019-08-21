@@ -11,39 +11,54 @@ const {
     loginUser,
     createOrder,
     deleteOrder,
-    getOpenOrder,
+    getOpenOrders,
     acceptOrder
 } = require('./queries')
 
 app.post('/api/users', (req, res) => {
     const userObj = req.body
     registerUser(userObj)
-    .then((results) => res.send(results))
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 app.get('/api/login', (req, res) => {
     const userObj = req.query
     loginUser(userObj)
-    .then((results) => res.send(results))
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 app.post('/api/orders', (req, res) => {
     const userObj = req.body.user
     const orderObj = req.body.order
     createOrder(userObj, orderObj)
-    .then((results) => res.send(results))
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 app.delete('/api/orders', (req, res) => {
     const orderObj = req.body
     deleteOrder(orderObj)
-    .then((results)=>res.send(results))
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 app.get('/api/orders', (req, res) => {
     const driverObj = req.query
-    getOpenOrder(driverObj)
-    .then((results)=> res.send(results))
+    getOpenOrders(driverObj)
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 app.patch('/api/order', (req, res) => {
@@ -51,7 +66,10 @@ app.patch('/api/order', (req, res) => {
     const driverObj = req.body.driver
     const orderObj = req.body.order
     acceptOrder(driverObj, orderObj)
-    .then((results)=> res.send(results))
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
 
 
