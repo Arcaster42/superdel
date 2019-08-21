@@ -7,12 +7,14 @@ exports.up = function(knex) {
 			t.string('address')
 			t.string('pass_hash')
 			t.boolean('staff')
+			//t.string('phone')
 		})
 	}
 
 	const createOrders = () => {
 		return knex.schema.createTable('orders', t => {
-			t.increments().index()
+			t.increments()
+				.index()
 			t.string('purchaser').references('users.email')
 			t.string('staff').references('users.email')
 			t.boolean('fulfilled')
@@ -22,7 +24,9 @@ exports.up = function(knex) {
 	const createOrderedItems = () => {
 		return knex.schema.createTable('ordered_items', t => {
 			t.increments().index()
-			t.integer('order_id').references('orders.id')
+			t.integer('order_id')
+				.references('orders.id')
+				.onDelete('CASCADE')
 			t.string('product_name')
 			t.integer('quantity')
 		})
