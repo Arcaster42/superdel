@@ -53,7 +53,7 @@
         :key="item.key"
         href="#"
         class="flex-column align-items-start"
-        @click="itemClick(item)"
+        :checked="itemClick(item)"
         variant="secondary"
       >
         <div class="d-flex w-100 justify-content-between">
