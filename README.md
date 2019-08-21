@@ -98,22 +98,6 @@ quantity (integer)
 
 ## API
 
-/api/login - GET
-----------------
-Expected
-- userObj 
-    - userObj.email 
-    - userObj.password
-
-Returned
-- userObj 
-    - userObj.email 
-    - userObj.first_name 
-    - userObj.last_name 
-    - userObj.address
-    - userObj.password (null)
-    - userObj.staff (bool)
-
 /api/users - POST
 -----------------
 Expected
@@ -132,3 +116,62 @@ Returned
     - address
     - password (null)
     - staff (bool)
+
+/api/login - GET
+----------------
+Expected
+- userObj 
+    - userObj.email 
+    - userObj.password
+
+Returned
+- user
+    - userObj.email 
+    - userObj.first_name 
+    - userObj.last_name 
+    - userObj.address
+    - userObj.password (null)
+    - userObj.staff (bool)
+
+/api/orders - POST
+-----------------
+Expected
+- userObj
+    - email
+    - first_name
+    - last_name
+    - address
+    - password (null)
+    - staff (bool)
+
+- orderObj
+    - items (Array)
+    - quantity (Array)
+
+Returned
+- orderedItems (Array)
+    - orderObj
+        - order_id (orderId),
+        - product_name (item),
+        - quantity (int)
+
+/api/orders - DELETE
+-----------------
+Expected
+- orderObj
+    - order_id (orderId),
+    - product_name (item),
+    - quantity (int)
+
+Returned'
+- orderObj
+    - order_id (orderId),
+    - product_name (item),
+    - quantity (int)
+
+/api/orders - GET
+-----------------
+
+/api/order - PATCH
+-----------------
+     

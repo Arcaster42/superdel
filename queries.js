@@ -13,7 +13,6 @@ const registerUser = (userObj) => {
                     if (err) reject(err)
                     return db('users').insert({ email: userObj.email, pass_hash: hash })
                         .then(() => {
-                            userObj.password = null
                             resolve(userObj)
                         })
                         .catch((err) => reject(err))
@@ -28,15 +27,15 @@ const registerUser = (userObj) => {
 const loginUser = (userObj) => {
     return db('users').where('email', userObj.email)
       .then((results) => {
-        if (results.length === 1) {
+        if (results.length > 0) {
           const user = results[0]
             return new Promise((resolve, reject) => {
             bcrypt.compare(userObj.password, user.pass_hash, (err, same)=> {
               if (err) reject(err)
               if(!same) reject({ err: 'Invalid Credentials' })
               if (same) {
-                userObj.password = null
-                resolve(userObj) 
+                user.password = null
+                resolve(user) 
             }})
           })
         }
@@ -60,8 +59,69 @@ const createOrder = (userObj, orderObj) => {
   }).catch((err) => { return { err } })
 }
 
+const deleteOrder = (orderObj) => {
+  return db('orders')
+    .where('id', orderObj.id).andWhere('staff', 'none')
+      .del()
+      .then((results) => {
+        if (results) {
+          return orderObj
+        }
+        else return { err: 'Driver has accepted order and is enroute' }
+      })
+      .catch((err) => { return { err } })
+}
+
+const getOpenOrders  = () => {
+  return db('orders')
+    .where('staff', 'none')
+      .select()
+      .then((results) => {
+        if (results.length > 0) {
+          return results
+        }
+        else return { err: 'No available orders' }
+      })
+      .catch((err) => { return { err } })
+    }
+
+const acceptOrder = (driverObj, orderObj) => {
+  return db('orders')
+    .where('id', orderObj.id).andWhere('staff', 'none')
+      .update({
+        staff: driverObj.email
+      })
+      .then((results) => {
+        if (results) {
+          return results
+        }
+        else return { err: 'Already staffed' }
+      }) 
+      .catch((err) => { return { err } })
+    }
+
+ 
+// const fulfillOrder = (orderObj, userObj) => {
+// 	return db("orders")
+// 		.where("id", orderObj.id)
+// 		.update({
+// 			'fulfilled': true
+// 		})
+// 		.then(results => {
+// 			if (results) {
+// 				return results
+// 			} else return { err: "Already staffed" }
+// 		})
+// 		.catch(err => {
+// 			return { err }
+// 		})
+// }
+
 module.exports = {
     registerUser,
     loginUser,
-    createOrder
+    createOrder,
+    deleteOrder,
+    getOpenOrders,
+    acceptOrder
 }
