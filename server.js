@@ -1,4 +1,4 @@
-require("dotenv").config()
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
@@ -8,7 +8,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 const {
     registerUser, 
-    loginUser
+    loginUser,
+    createOrder
 } = require('./queries')
 
 app.post('/api/users', (req, res) => {
@@ -20,6 +21,13 @@ app.post('/api/users', (req, res) => {
 app.get('/api/login', (req, res) => {
     const userObj = req.query
     loginUser(userObj)
+    .then((results) => res.send(results))
+})
+
+app.post('/api/orders', (req, res) => {
+    const userObj = req.body.user
+    const orderObj = req.body.order
+    createOrder(userObj, orderObj)
     .then((results) => res.send(results))
 })
 

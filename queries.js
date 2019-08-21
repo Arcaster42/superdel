@@ -22,7 +22,7 @@ const registerUser = (userObj) => {
         }
         else return { err: 'Username Unavailable' }
     })
-    .catch((err) => { return err })
+    .catch((err) => { return { err } })
  }
 
 const loginUser = (userObj) => {
@@ -41,10 +41,27 @@ const loginUser = (userObj) => {
           })
         }
         else return { err: 'Username Not Found' }
-      }).catch((err) => { return err })
-} 
+      }).catch((err) => { return { err } })
+}
+
+const createOrder = (userObj, orderObj) => {
+  return db('orders').insert({
+    purchaser: userObj.email,
+    staff: 'none',
+    fulfilled: false,
+  }, ['id']).then((orderId) => {
+    return Promise.all(orderObj.items.map((item, index) => {
+      return db('ordered_items').insert({
+      order_id: orderId,
+      product_name: item,
+      quantity: orderObj.quantity[index]
+    })
+  })).catch((err) => { return { err } })
+  }).catch((err) => { return { err } })
+}
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    createOrder
 }
