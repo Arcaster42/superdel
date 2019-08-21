@@ -98,4 +98,37 @@ quantity (integer)
 
 ## API
 
-(Insert API info here)
+/api/login - GET
+----------------
+Expected
+- userObj 
+    - userObj.email 
+    - userObj.password
+
+Returned
+- userObj 
+    - userObj.email 
+    - userObj.first_name 
+    - userObj.last_name 
+    - userObj.address
+    - userObj.password (null)
+    - userObj.staff (bool)
+
+/api/users - POST
+-----------------
+Expected
+- userObj
+    - email
+    - first_name
+    - last_name
+    - address
+    - password
+
+Returned
+- userObj
+    - email
+    - first_name
+    - last_name
+    - address
+    - password (null)
+    - staff (bool)
