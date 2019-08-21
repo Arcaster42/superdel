@@ -14,7 +14,12 @@ export default new Vuex.Store({
   },
   
   mutations: {
-    // Here we will create any mutations
+    changeLoginView(state, view) {
+        state.loginView = view
+    },
+    setUser(state, user) {
+        state.user = user
+    }
   },
   
   actions: {

@@ -10,18 +10,20 @@
         </b-row> 
         <b-row v-if="loginView === 'userType'" class="justify-content-center">
           <b-col cols="4">
-              <b-button type="submit" variant="primary" block>I'm a User</b-button>
+              <b-button type="button" @click="$store.commit('changeLoginView', 'login')" 
+                variant="primary" block>I'm a User</b-button>
           </b-col>
           <b-col cols="4">
-              <b-button type="submit" variant="primary" block>I'm a Driver</b-button>
+              <b-button type="button" @click="$store.commit('changeLoginView', 'login')"
+                variant="primary" block>I'm a Driver</b-button>
           </b-col>
         </b-row>
         <b-row class="justify-content-center">
-          <b-col v-if="showLogin" cols="4">
-          <LoginUser />
+          <b-col v-if="loginView === 'login'" cols="4">
+            <LoginUser />
           </b-col>
-          <b-col v-if="showSignup" cols="6">
-            <SignupUser />
+          <b-col v-if="loginView === 'register'" cols="6">
+            <RegisterUser />
           </b-col>
         </b-row>
     </b-container>
@@ -30,17 +32,20 @@
 
 <script>
 import LoginUser from './LoginUser'
-import SignupUser from './SignupUser'
+import RegisterUser from './RegisterUser'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
   components: {
     LoginUser,
-    SignupUser
+    RegisterUser
   },
-  computed: 
-   mapState(['loginView'])
+  computed: mapState(['loginView']),
+  methods: {
+
+  }
+
 }
 </script>
 
