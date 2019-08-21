@@ -1,5 +1,5 @@
 <template>
-        <b-list-group-item @click="itemClick" :variant="variant">
+        <b-list-group-item @click="itemClick(item)" :variant="variant">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{item.one}}</h5>
                 <small class="text-muted">{{item.two}}</small>
@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'OrderItem',
   data: () => ({
@@ -20,14 +19,13 @@ export default {
       item: Object
   },
   methods: {
-    itemClick() {
+    itemClick(item) {
         if (this.variant === "light") {
             this.variant = 'primary'
             this.$store.commit('selectOrder', item)
         } else {
             this.variant = 'light'
         }
-        
     }
   }
 }
