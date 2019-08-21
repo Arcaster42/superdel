@@ -8,7 +8,7 @@
             <p class="sub-title">Grocery shopping made easy and accessible for all!</p>
           </b-col>
         </b-row> 
-        <b-row class="justify-content-center">
+        <b-row v-if="loginView === 'userType'" class="justify-content-center">
           <b-col cols="4">
               <b-button type="submit" variant="primary" block>I'm a User</b-button>
           </b-col>
@@ -31,6 +31,7 @@
 <script>
 import LoginUser from './LoginUser'
 import SignupUser from './SignupUser'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
@@ -38,9 +39,8 @@ export default {
     LoginUser,
     SignupUser
   },
-  props: {
-    msg: String
-  }
+  computed: 
+   mapState(['loginView'])
 }
 </script>
 
