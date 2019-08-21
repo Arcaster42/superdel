@@ -169,5 +169,9 @@ Returned'
     - product_name (item),
     - quantity (int)
 
+/api/orders - GET
+-----------------
+
+/api/order - PATCH
 -----------------
      
