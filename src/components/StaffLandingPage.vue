@@ -26,7 +26,7 @@
               <em>User</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#" @click="$store.commit('staffPage', 'completed')">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="#" @click="$store.commit('leaveStaffPage', 'Login')">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -37,9 +37,6 @@
         <h1 class="text-black font-weight-bold">Welcome, ${Driver}</h1>
         <hr class="divider my-4" />
       </div>
-      <!-- <div class="col-lg-8 align-self-baseline">
-        <p class="text-white-75 mb-5">Available orders</p>
-      </div>-->
     </div>
 
     <!-- ALL ORDERS -->
@@ -48,21 +45,15 @@
         <b-button size="lg" @click="$store.commit('sendSelectedOrders', driverSelectedOrders)">SuperDel Selected Order(s)</b-button>
       </b-col>
 
-      <b-list-group-item
-        v-for="item in items"
-        :key="item.key"
-        href="#"
-        class="flex-column align-items-start"
-        @click="itemClick(item)"
-        variant="secondary"
-      >
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{item.one}}</h5>
-          <small class="text-muted">{{item.two}}</small>
+      <div
+            v-for="item in items"
+            :key="item.key"
+            href="#"
+            class="flex-column align-items-start"
+        >
+            <OrderItem :item="item"/>
         </div>
-        <p class="mb-1">{{item.three}}</p>
-        <small class="text-muted">{{item.four}}</small>
-      </b-list-group-item>
+
     </div>
 
     <!-- MY ORDERS -->
@@ -113,9 +104,13 @@
 
 <script>
 import { mapState } from "vuex";
+import OrderItem from './OrderItem'
 
 export default {
   name: "StaffLandingPage",
+  components: {
+    OrderItem
+  },
   computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
   data: () => ({
     items: [
@@ -123,11 +118,14 @@ export default {
       { key: 2, one: "owetjhwi3t", two: "poi", three: "1234", four: "098^"}
     ],
     selectedOrders: [],
+    isActive: {}
   }),
   methods: {
     itemClick(item) {
+      console.log(item)
       this.$store.commit('selectOrder', item)
-    }
+      this.isActive[item.key] = 1
+    },
   }
 };
 </script>
