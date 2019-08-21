@@ -70,17 +70,18 @@ app.patch('/api/order', (req, res) => {
         console.log(results)
         res.send(results)
     })
+})
 
 app.patch('/api/order/fulfill', (req, res) => {
-const driverObj = req.body.driver
-const orderObj = req.body.order
-fulfillOrder(driverObj, orderObj)
-.then((results) => {
-    console.log(results)
-    res.send(results)
+    const driverObj = req.body.driver
+    const orderObj = req.body.order
+    fulfillOrder(driverObj, orderObj)
+    .then((results) => {
+        console.log(results)
+        res.send(results)
+    })
 })
-})
 
 
 
-app.listen(port, () => { console.log(`App listening on ${port}`) })
+app.listen(port, () => { console.log(`App listening on ${port}`) } )
