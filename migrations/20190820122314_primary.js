@@ -7,6 +7,7 @@ exports.up = function(knex) {
 			t.string('address')
 			t.string('pass_hash')
 			t.boolean('staff')
+			//t.string('phone')
 		})
 	}
 
