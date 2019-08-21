@@ -1,26 +1,32 @@
 <template>
   <div id="app">
-    <Login/>
+    <Login />
+    <StaffLandingPage v-if="mainView==='StaffLandingPage'" />
   </div>
 </template>
 
 <script>
-import Login from './components/Login.vue'
+import Login from "./components/Login.vue";
+import StaffLandingPage from "./components/StaffLandingPage.vue";
+import { mapState } from "vuex";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    Login
-  }
-}
+    Login,
+    StaffLandingPage
+  },
+  computed: mapState(["mainView"])
+};
 </script>
 
 <style>
-html, body {
+html,
+body {
   height: 100%;
 }
 #app {
   margin: 0;
-  height: 100%
+  height: 100%;
 }
 </style>
