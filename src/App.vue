@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login />
+    <Login v-if="mainView==='Login'"/>
     <StaffLandingPage v-if="mainView==='StaffLandingPage'" />
   </div>
 </template>
