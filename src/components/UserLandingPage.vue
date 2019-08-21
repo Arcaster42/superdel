@@ -45,24 +45,13 @@
         <b-button size="lg" @click="$store.commit('sendSelectedOrders', driverSelectedOrders)">SuperDel Selected Order(s)</b-button>
       </b-col>
 
-      <div
-            v-for="item in items"
-            :key="item.key"
-            href="#"
-            class="flex-column align-items-start"
-        >
-            <OrderItem :item="item"/>
-        </div>
-
-    </div>
-
-    <!-- MY ORDERS -->
-    <div v-if="driverView === 'my'">
-      <b-list-group-item
-        v-for="item in driverMyOrders"
+      <b-form-checkbox
+        v-for="item in items"
         :key="item.key"
         href="#"
         class="flex-column align-items-start"
+        :checked="itemClick(item)"
+        variant="secondary"
       >
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{item.one}}</h5>
@@ -70,47 +59,17 @@
         </div>
         <p class="mb-1">{{item.three}}</p>
         <small class="text-muted">{{item.four}}</small>
-      </b-list-group-item>
-    </div>
+      </b-form-checkbox>
 
-    <!-- COMPLETED ORDERS -->
-    <div v-if="driverView === 'completed'">
-    <b-list-group-item
-      href="#"
-      class="flex-column align-items-start"
-    >
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">ONE</h5>
-        <small class="text-muted">3 minutes ago</small>
-      </div>
-      <p class="mb-1">Egg, Milk, Tea</p>
-      <small class="text-muted">¥3,500</small>
-    </b-list-group-item>
-    <b-list-group-item
-      v-if="driverView === 'completed'"
-      href="#"
-      class="flex-column align-items-start"
-    >
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">TWO</h5>
-        <small class="text-muted">3 minutes ago</small>
-      </div>
-      <p class="mb-1">Egg, Milk, Tea</p>
-      <small class="text-muted">¥3,500</small>
-    </b-list-group-item>
-  </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import OrderItem from './OrderItem'
 
 export default {
-  name: "StaffLandingPage",
-  components: {
-    OrderItem
-  },
+  name: "UserLandingPage",
   computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
   data: () => ({
     items: [
@@ -120,6 +79,13 @@ export default {
     selectedOrders: [],
     isActive: {}
   }),
+  methods: {
+    itemClick(item) {
+      console.log(item)
+      this.$store.commit('selectOrder', item)
+      this.isActive[item.key] = 1
+    },
+  }
 };
 </script>
 
