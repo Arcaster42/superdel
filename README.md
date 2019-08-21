@@ -66,7 +66,35 @@ yarn frontend
 ## Database
 
 ### Schema
-(Insert schemas here)
+
+users
+-----
+email (string)
+first_name (string)
+last_name (string)
+address (string)
+pass_hash (string)
+staff (boolean)
+
+orders
+------
+id (integer)
+
+purchaser (string) -> users.email
+
+staff (string) -> users.email
+
+fulfilled (boolean)
+
+ordered_items
+-------------
+id (integer)
+
+order_id (integer) -> orders.id
+
+product_name (string)
+
+quantity (integer)
 
 ## API
 
