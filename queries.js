@@ -86,36 +86,45 @@ const getOpenOrders  = () => {
     }
 
 const acceptOrder = (driverObj, orderObj) => {
-  return db('orders')
-    .where('id', orderObj.id).andWhere('staff', 'none')
-      .update({
-        staff: driverObj.email
+  if (driverObj.staff) {
+    return db('orders')
+			.where('id', orderObj.id)
+			.andWhere('staff', 'none')
+			.update({
+				staff: driverObj.email
+			})
+			.then(results => {
+				if (results) {
+					return results
+				} else return { err: 'Already staffed' }
+			})
+			.catch(err => {
+				return { err }
       })
-      .then((results) => {
-        if (results) {
-          return results
-        }
-        else return { err: 'Already staffed' }
-      }) 
-      .catch((err) => { return { err } })
+    }
+      return new Promise((resolve, reject)=>resolve({err: 'must be staff to accept order'}))
+
     }
 
  
-// const fulfillOrder = (orderObj, userObj) => {
-// 	return db("orders")
-// 		.where("id", orderObj.id)
-// 		.update({
-// 			'fulfilled': true
-// 		})
-// 		.then(results => {
-// 			if (results) {
-// 				return results
-// 			} else return { err: "Already staffed" }
-// 		})
-// 		.catch(err => {
-// 			return { err }
-// 		})
-// }
+const fulfillOrder = (driverObj, orderObj) => {
+ if (driverObj.staff) {
+	return db('orders')
+		.where('id', orderObj.id)
+		.update({
+			fulfilled: true
+		})
+		.then(results => {
+			if (results) {
+				return results
+			} else return { err: 'Already staffed' }
+		})
+		.catch(err => {
+			return { err }
+    })
+  }
+  return new Promise((resolve, reject) => resolve({err: 'must be staff to fulfill order'}))
+}
 
 module.exports = {
     registerUser,
@@ -123,5 +132,6 @@ module.exports = {
     createOrder,
     deleteOrder,
     getOpenOrders,
-    acceptOrder
+    acceptOrder,
+    fulfillOrder
 }
