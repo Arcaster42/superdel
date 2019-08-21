@@ -6,10 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    loginView: 'userType',
+    loginView: 'login',
+    // mainView: 'Login',
+    mainView: 'StaffLandingPage',
     driverView: 'all',
     driverMyOrders: [],
-    mainView: 'Login'
+    driverSelectedOrders: [],
   },
 
   getters: {
@@ -27,10 +29,14 @@ export default new Vuex.Store({
       state.driverView = value
     },
     selectOrder(state, value) {
-      if (state.driverMyOrders.includes(value)) {
+      if (state.driverSelectedOrders.includes(value)) {
         return
       }
-      state.driverMyOrders.push(value)
+      state.driverSelectedOrders.push(value)
+    },
+    sendSelectedOrders(state, value) {
+      state.driverMyOrders = value;
+      state.driverView = 'my';
     }
   },
 

@@ -45,7 +45,7 @@
     <!-- ALL ORDERS -->
     <div v-if="driverView === 'all'">
       <b-col lg="4" class="pb-2">
-        <b-button size="lg">Start Order(s)</b-button>
+        <b-button size="lg" @click="$store.commit('sendSelectedOrders', driverSelectedOrders)">SuperDel Selected Order(s)</b-button>
       </b-col>
 
       <b-list-group-item
@@ -53,7 +53,8 @@
         :key="item.key"
         href="#"
         class="flex-column align-items-start"
-        @click="$store.commit('selectOrder', item)"
+        @click="itemClick(item)"
+        variant="secondary"
       >
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{item.one}}</h5>
@@ -67,24 +68,23 @@
     <!-- MY ORDERS -->
     <div v-if="driverView === 'my'">
       <b-list-group-item
-        v-for="data in driverMyOrders"
-        :key="data.key"
+        v-for="item in driverMyOrders"
+        :key="item.key"
         href="#"
         class="flex-column align-items-start"
-        @click="$store.commit('selectOrder', data.key)"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{data.one}}</h5>
-          <small class="text-muted">{{data.two}}</small>
+          <h5 class="mb-1">{{item.one}}</h5>
+          <small class="text-muted">{{item.two}}</small>
         </div>
-        <p class="mb-1">{{data.three}}</p>
-        <small class="text-muted">{{data.four}}</small>
+        <p class="mb-1">{{item.three}}</p>
+        <small class="text-muted">{{item.four}}</small>
       </b-list-group-item>
     </div>
 
     <!-- COMPLETED ORDERS -->
+    <div v-if="driverView === 'completed'">
     <b-list-group-item
-      v-if="driverView === 'completed'"
       href="#"
       class="flex-column align-items-start"
     >
@@ -108,6 +108,7 @@
       <small class="text-muted">¥3,500</small>
     </b-list-group-item>
   </div>
+  </div>
 </template>
 
 <script>
@@ -115,13 +116,19 @@ import { mapState } from "vuex";
 
 export default {
   name: "StaffLandingPage",
-  computed: mapState(["driverView", "driverMyOrders"]),
+  computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
   data: () => ({
     items: [
-      { key: 1, one: "qwer", two: "poi", three: "1234", four: "098^" },
-      { key: 2, one: "owetjhwi3t", two: "poi", three: "1234", four: "098^" }
-    ]
-  })
+      { key: 1, one: "qwer", two: "poi", three: "1234", four: "098^"},
+      { key: 2, one: "owetjhwi3t", two: "poi", three: "1234", four: "098^"}
+    ],
+    selectedOrders: [],
+  }),
+  methods: {
+    itemClick(item) {
+      this.$store.commit('selectOrder', item)
+    }
+  }
 };
 </script>
 

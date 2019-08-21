@@ -9,7 +9,7 @@ const registerUser = (userObj) => {
     .then((results) => {
         if (results.length < 1) {
             return new Promise((resolve, reject) => {
-                bcrypt.hash(userObj.password, 37, (err, hash) => {
+                bcrypt.hash(userObj.password, 10, (err, hash) => {
                     if (err) reject(err)
                     return db('users').insert({ email: userObj.email, pass_hash: hash })
                         .then(() => {
