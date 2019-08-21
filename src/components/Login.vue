@@ -27,6 +27,9 @@
           <b-col v-if="loginView === 'RegisterUser'" cols="6">
             <RegisterUser />
           </b-col>
+          <b-col v-if="loginView === 'RegisterDriver'" cols="6">
+            <RegisterDriver />
+          </b-col>
         </b-row>
     </b-container>
   </div>
@@ -35,13 +38,15 @@
 <script>
 import LoginUser from './LoginUser'
 import RegisterUser from './RegisterUser'
+import RegisterDriver from './RegisterDriver'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
   components: {
     LoginUser,
-    RegisterUser
+    RegisterUser,
+    RegisterDriver
   },
   computed: mapState(['loginView']),
   methods: {
