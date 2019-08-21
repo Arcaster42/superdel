@@ -12,9 +12,9 @@ const registerUser = (userObj) => {
                 bcrypt.hash(userObj.password, 37, (err, hash) => {
                     if (err) reject(err)
                     return db('users').insert({ email: userObj.email, pass_hash: hash })
-                        .then(() => {
-                            userObj.password = null
-                            resolve(userObj)
+                        .then((user) => {
+                            user.password = null
+                            resolve(user)
                         })
                         .catch((err) => reject(err))
                 })
@@ -35,8 +35,8 @@ const loginUser = (userObj) => {
               if (err) reject(err)
               if(!same) reject({ err: 'Invalid Credentials' })
               if (same) {
-                userObj.password = null
-                resolve(userObj) 
+                user.password = null
+                resolve(user) 
             }})
           })
         }
@@ -62,17 +62,53 @@ const createOrder = (userObj, orderObj) => {
 
 const deleteOrder = (orderObj) => {
   return db('orders')
-    .where('id', orderObj.id)
+    .where('id', orderObj.id).andWhere('staff', 'none')
       .del()
-      .then(() => {
-        return orderObj
+      .then((results) => {
+        if (results) {
+          return orderObj
+        }
+        else return { err: 'Driver has accepted order and is enroute' }
       })
       .catch((err) => { return { err } })
 }
+
+const getOpenOrder  = (driverObj) => {
+  return db('orders')
+    .where('staff', 'none')
+    // .andWhere('city', driverObj.city)
+    // Some way to identify orders within range of the driver?
+      .select()
+      .then((results) => {
+        if (results.length > 0) {
+          return results
+        }
+        else return { err: 'No available orders' }
+      })
+      .catch((err) => { return { err } })
+    }
+
+const acceptOrder = (driverObj, orderObj) => {
+  return db('orders')
+    .where('id', orderObj.id).andWhere('staff', 'none')
+      .update({
+        staff: driverObj.email
+      })
+      .then((results) => {
+        if (results) {
+          return results
+        }
+        else return { err: 'Already staffed' }
+      }) 
+      .catch((err) => { return { err } })
+    }
+
 
 module.exports = {
     registerUser,
     loginUser,
     createOrder,
     deleteOrder,
+    getOpenOrder,
+    acceptOrder
 }
