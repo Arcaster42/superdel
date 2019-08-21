@@ -9,9 +9,8 @@
             <b-form-input v-model="address" type="text" placeholder="Enter your address" required/>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary" block @click="registerClick">Register</b-button>
-            <b-button type="button" @click="homeClick"
-              variant="outline-info mt-4">Go Home</b-button>
+            <b-button variant="primary" block @click="registerClick">Register</b-button>
+            <b-button @click="homeClick" variant="outline-info mt-4">Go Home</b-button>
           </div>
         </b-form>
 </template>
@@ -31,9 +30,8 @@ export default {
   }),
   methods: {
     homeClick () {
-      this.$store.commit('changeLoginView', 'userType')
-      }
-    },
+      this.$store.commit('changeLoginView', 'login')
+      },
     registerClick (e) {
       e.preventDefault
       const userObj = {
@@ -43,12 +41,14 @@ export default {
         address: this.address,
         password: this.password
       }
-
       axios.post('/api/users', userObj)
       .then((response) => {
         if (response.data.err) this.error = response.data.err
+        console.log(response)
+        if (response.data.userObj) this.$store.commit('setUser', response.data.userObj)
         //return home
       })
+    },
   }
 }
 </script>
