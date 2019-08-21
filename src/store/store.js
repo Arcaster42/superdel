@@ -25,6 +25,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
+    leaveStaffPage(state, value) {
+      state.mainView = value
+    },
     staffPage(state, value) {
       state.driverView = value
     },
