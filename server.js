@@ -9,7 +9,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 const {
     registerUser, 
     loginUser,
-    createOrder
+    createOrder,
+    deleteOrder
 } = require('./queries')
 
 app.post('/api/users', (req, res) => {
@@ -30,5 +31,13 @@ app.post('/api/orders', (req, res) => {
     createOrder(userObj, orderObj)
     .then((results) => res.send(results))
 })
+
+app.delete('/api/orders', (req, res) => {
+    const orderObj = req.body
+    deleteOrder(orderObj)
+    .then((results)=>res.send(results))
+})
+
+
 
 app.listen(port, () => { console.log(`App listening on ${port}`) })
