@@ -12,9 +12,8 @@ const registerUser = (userObj) => {
                 bcrypt.hash(userObj.password, 37, (err, hash) => {
                     if (err) reject(err)
                     return db('users').insert({ email: userObj.email, pass_hash: hash })
-                        .then((user) => {
-                            user.password = null
-                            resolve(user)
+                        .then(() => {
+                            resolve(userObj)
                         })
                         .catch((err) => reject(err))
                 })
@@ -28,7 +27,7 @@ const registerUser = (userObj) => {
 const loginUser = (userObj) => {
     return db('users').where('email', userObj.email)
       .then((results) => {
-        if (results.length === 1) {
+        if (results.length > 0) {
           const user = results[0]
             return new Promise((resolve, reject) => {
             bcrypt.compare(userObj.password, user.pass_hash, (err, same)=> {
@@ -73,11 +72,9 @@ const deleteOrder = (orderObj) => {
       .catch((err) => { return { err } })
 }
 
-const getOpenOrder  = (driverObj) => {
+const getOpenOrders  = () => {
   return db('orders')
     .where('staff', 'none')
-    // .andWhere('city', driverObj.city)
-    // Some way to identify orders within range of the driver?
       .select()
       .then((results) => {
         if (results.length > 0) {
@@ -103,12 +100,28 @@ const acceptOrder = (driverObj, orderObj) => {
       .catch((err) => { return { err } })
     }
 
+ 
+// const fulfillOrder = (orderObj, userObj) => {
+// 	return db("orders")
+// 		.where("id", orderObj.id)
+// 		.update({
+// 			'fulfilled': true
+// 		})
+// 		.then(results => {
+// 			if (results) {
+// 				return results
+// 			} else return { err: "Already staffed" }
+// 		})
+// 		.catch(err => {
+// 			return { err }
+// 		})
+// }
 
 module.exports = {
     registerUser,
     loginUser,
     createOrder,
     deleteOrder,
-    getOpenOrder,
+    getOpenOrders,
     acceptOrder
 }
