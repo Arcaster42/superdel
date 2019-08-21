@@ -156,6 +156,7 @@ Returned
         - quantity (int)
 
 /api/orders - DELETE
+-----------------
 Expected
 - orderObj
     - order_id (orderId),
