@@ -47,6 +47,7 @@
     <b-card bg-variant="dark" text-variant="white" title="Checkout">
       <b-card-text>
         Thank you for shopping with us, {{user}}!
+        <b-card-text class="text-muted" >Distincts: {{cartItems.length}}</b-card-text>
         <div class="float-right">
         <b-button href="#" variant="primary" v-on:click="checkout">Checkout</b-button>
         </div>
@@ -62,9 +63,6 @@
   </b-list-group>
 </div>
 
-<!-- USER ORDER Card-->
-    <div class="options">
-
 
 <!-- product nav-->
     <div class="options-nav">
@@ -75,6 +73,9 @@
       </b-nav>
     </div>
 
+<!-- USER ORDER Card-->
+    <div class="options">
+<!-- USER ORDER Italian-->
     <div v-if="productView==='Italian'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.italian" v-bind:key="index">
@@ -100,6 +101,7 @@
     </b-card-group>
   </div>
 
+<!-- USER ORDER Japanese-->
   <div v-if="productView==='Japanese'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.japanese" v-bind:key="index">
@@ -125,6 +127,7 @@
     </b-card-group>
   </div>
   
+  <!-- USER ORDER Basics-->
 <div v-if="productView==='Basics'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.basics" v-bind:key="index">
@@ -164,6 +167,20 @@ import pasta from '../assets/pasta.jpeg'
 import sauce from '../assets/sauce.jpeg'
 import tomato from '../assets/tomato.jpeg'
 
+import eggs from '../assets/eggs.jpg'
+import olive from '../assets/olive.jpg'
+import pepper from '../assets/pepper.jpg'
+import rice from '../assets/rice.jpeg'
+import water from '../assets/water.jpg'
+import salt from '../assets/salt.jpeg'
+
+import bulldog from '../assets/bulldog.jpeg'
+import miso from '../assets/miso.jpg'
+import seaweed from '../assets/seaweed.jpeg'
+import tea from '../assets/tea.png'
+import tofu from '../assets/tofu.jpeg'
+import natto from '../assets/natto.jpg'
+
 export default {
   name: 'UserLandingPage',
   computed: {
@@ -185,20 +202,20 @@ export default {
       { productTitle: 'Sauce', photo: sauce, productDetails: 'poi', productPrice: 2.38},
     ],
     basics: [
-      { productTitle: 'Milk', photo: milk, productDetails: 'poi', productPrice: 2.34},
-      { productTitle: 'Mozarella', photo: mozza, productDetails: 'poi', productPrice: 2.35},
-      { productTitle: 'Tomatoes', photo: tomato, productDetails: 'poi', productPrice: 2.36},
-      { productTitle: 'Pasta', photo: pasta, productDetails: 'poi', productPrice: 2.37},
-      { productTitle: 'Basil', photo: basil, productDetails: 'poi', productPrice: 2.38},
-      { productTitle: 'Sauce', photo: sauce, productDetails: 'poi', productPrice: 2.38}
+      { productTitle: 'Eggs', photo: eggs, productDetails: 'poi', productPrice: 2.34},
+      { productTitle: 'Olive Oil', photo: olive, productDetails: 'poi', productPrice: 2.35},
+      { productTitle: 'Rice', photo: rice, productDetails: 'poi', productPrice: 2.36},
+      { productTitle: 'Salt', photo: salt, productDetails: 'poi', productPrice: 2.37},
+      { productTitle: 'Pepper', photo: pepper, productDetails: 'poi', productPrice: 2.38},
+      { productTitle: 'Water', photo: water, productDetails: 'poi', productPrice: 2.38}
     ],
     japanese: [
-      { productTitle: '牛乳', photo: milk, productDetails: 'poi', productPrice: 2.34},
-      { productTitle: 'Mozarella', photo: mozza, productDetails: 'poi', productPrice: 2.35},
-      { productTitle: 'Tomatoes', photo: tomato, productDetails: 'poi', productPrice: 2.36},
-      { productTitle: 'Pasta', photo: pasta, productDetails: 'poi', productPrice: 2.37},
-      { productTitle: 'Basil', photo: basil, productDetails: 'poi', productPrice: 2.38},
-      { productTitle: 'Sauce', photo: sauce, productDetails: 'poi', productPrice: 2.38}
+      { productTitle: 'BullDog Sauce', photo: bulldog, productDetails: 'poi', productPrice: 2.34},
+      { productTitle: 'Seaweed', photo: seaweed, productDetails: 'poi', productPrice: 2.35},
+      { productTitle: 'Natto', photo: natto, productDetails: 'poi', productPrice: 2.36},
+      { productTitle: 'Tea', photo: tea, productDetails: 'poi', productPrice: 2.37},
+      { productTitle: 'Miso', photo: miso, productDetails: 'poi', productPrice: 2.38},
+      { productTitle: 'Tofu', photo: tofu, productDetails: 'poi', productPrice: 2.38}
     ]}
   }),
   methods: {
@@ -209,7 +226,7 @@ export default {
     },
     checkout: function() {
       const itemObj = { itemArray: this.cartItems , quantitiesArray: this.cartQuantities}
-      this.$store.commit('setCartItems', itemObj)
+      this.$store.commit('setCheckoutItems', itemObj)
     },
     addItem: function(item) {
       if (this.cartItems.length) {
