@@ -12,7 +12,8 @@ const {
     createOrder,
     deleteOrder,
     getOpenOrders,
-    acceptOrder
+    acceptOrder,
+    fulfillOrder
 } = require('./queries')
 
 app.post('/api/users', (req, res) => {
@@ -62,7 +63,6 @@ app.get('/api/orders', (req, res) => {
 })
 
 app.patch('/api/order', (req, res) => {
-    //driver body includes driver's email, and order Obj.
     const driverObj = req.body.driver
     const orderObj = req.body.order
     acceptOrder(driverObj, orderObj)
@@ -70,6 +70,15 @@ app.patch('/api/order', (req, res) => {
         console.log(results)
         res.send(results)
     })
+
+app.patch('/api/order/fulfill', (req, res) => {
+const driverObj = req.body.driver
+const orderObj = req.body.order
+fulfillOrder(driverObj, orderObj)
+.then((results) => {
+    console.log(results)
+    res.send(results)
+})
 })
 
 
