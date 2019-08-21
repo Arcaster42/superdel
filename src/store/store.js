@@ -11,8 +11,7 @@ export default new Vuex.Store({
     driverView: 'all',
     driverMyOrders: [],
     driverSelectedOrders: [],
-    userCartItems: [],
-    userCartQuantities: [],
+    checkoutItems: [],
   },
 
   getters: {
@@ -42,9 +41,8 @@ export default new Vuex.Store({
       state.driverMyOrders = value
       state.driverView = 'my'
     },
-    setCartItems(state, itemObj) {
-      state.userCartItems = itemObj.itemArray
-      state.userCartQuantities =itemObj.quantitiesArray
+    setCheckoutItems(state, itemObj) {
+      state.checkoutItems = itemObj
     },
 
   },
