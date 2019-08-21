@@ -7,22 +7,24 @@
             <hr class="divider my-4">
             <p class="sub-title">Grocery shopping made easy and accessible for all!</p>
           </b-col>
-        </b-row> 
+        </b-row>
+
         <b-row v-if="loginView === 'userType'" class="justify-content-center">
           <b-col cols="4">
-              <b-button type="button" @click="$store.commit('changeLoginView', 'login')" 
+              <b-button type="button" @click="userBtnClick" 
                 variant="primary" block>I'm a User</b-button>
           </b-col>
           <b-col cols="4">
-              <b-button type="button" @click="$store.commit('changeLoginView', 'login')"
-                variant="primary" block>I'm a Driver</b-button>
+              <b-button type="button" @click="driverBtnClick"
+                variant="primary" block>I want to be a Driver</b-button>
           </b-col>
         </b-row>
+        
         <b-row class="justify-content-center">
           <b-col v-if="loginView === 'login'" cols="4">
             <LoginUser />
           </b-col>
-          <b-col v-if="loginView === 'register'" cols="6">
+          <b-col v-if="loginView === 'RegisterUser'" cols="6">
             <RegisterUser />
           </b-col>
         </b-row>
@@ -43,7 +45,12 @@ export default {
   },
   computed: mapState(['loginView']),
   methods: {
-
+    userBtnClick() {
+      this.$store.commit('changeLoginView', 'RegisterUser')
+    },
+    driverBtnClick() {
+      this.$store.commit('changeLoginView', 'RegisterDriver')
+    }
   }
 
 }
