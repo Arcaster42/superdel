@@ -60,8 +60,19 @@ const createOrder = (userObj, orderObj) => {
   }).catch((err) => { return { err } })
 }
 
+const deleteOrder = (orderObj) => {
+  return db('orders')
+    .where('id', orderObj.id)
+      .del()
+      .then(() => {
+        return orderObj
+      })
+      .catch((err) => { return { err } })
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    createOrder
+    createOrder,
+    deleteOrder,
 }
