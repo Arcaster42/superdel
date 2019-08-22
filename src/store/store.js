@@ -1,5 +1,5 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
+import Vuex from 'vuex'
+import Vue from 'vue'
 
 Vue.use(Vuex)
 
@@ -7,11 +7,11 @@ export default new Vuex.Store({
   state: {
     user: null,
     loginView: 'login',
-    // mainView: 'Login',
     mainView: 'StaffLandingPage',
     driverView: 'all',
     driverMyOrders: [],
     driverSelectedOrders: [],
+    checkoutItems: [],
   },
 
   getters: {
@@ -38,9 +38,13 @@ export default new Vuex.Store({
       state.driverSelectedOrders.push(value)
     },
     sendSelectedOrders(state, value) {
-      state.driverMyOrders = value;
-      state.driverView = 'my';
-    }
+      state.driverMyOrders = value
+      state.driverView = 'my'
+    },
+    setCheckoutItems(state, itemObj) {
+      state.checkoutItems = itemObj
+    },
+
   },
 
   actions: {
