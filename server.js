@@ -21,26 +21,26 @@ app.post('/api/users', (req, res) => {
     const userObj = req.body
     registerUser(userObj)
     .then((results) => {
-        console.log(results)
+        console.log('post', results)
         res.send(results)
     })
 })
 
 app.get('/api/login', (req, res) => {
     const userObj = req.query
+    console.log("server", userObj)
     loginUser(userObj)
     .then((results) => {
-        console.log(results)
+        console.log("get", results)
         res.send(results)
     })
 })
 
 app.post('/api/orders', (req, res) => {
-    const userObj = req.body.user
-    const orderObj = req.body.order
-    createOrder(userObj, orderObj)
+    const orderObj = req.body
+    createOrder(orderObj)
     .then((results) => {
-        console.log(results)
+        console.log("rezzy",results)
         res.send(results)
     })
 })

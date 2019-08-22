@@ -43,20 +43,36 @@ const loginUser = (userObj) => {
       }).catch((err) => { return { err } })
 }
 
-const createOrder = (userObj, orderObj) => {
-  return db('orders').insert({
-    purchaser: userObj.email,
-    staff: 'none',
-    fulfilled: false,
-  }, ['id']).then((orderId) => {
-    return Promise.all(orderObj.items.map((item, index) => {
-      return db('ordered_items').insert({
-      order_id: orderId,
-      product_name: item,
-      quantity: orderObj.quantity[index]
-    })
-  })).catch((err) => { return { err } })
-  }).catch((err) => { return { err } })
+const createOrder = (orderObj) => {
+  console.log(orderObj)
+  return db("orders")
+		.insert(
+			{
+				purchaser: orderObj.email,
+				staff: "none",
+				fulfilled: false,
+				price: orderObj.price
+			},
+			["id"]
+		)
+		.then(orderId => {
+      console.log("orderID", orderId)
+			return Promise.all(
+				orderObj.itemArray.map((item, index) => {
+					return db("ordered_items").insert({
+						order_id: orderId[0]["id"],
+						product_name: item,
+            quantity: orderObj.quantitiesArray[index],
+            unit_price: orderObj.priceArray[index]
+					});
+				})
+			).catch(err => {
+				return { err };
+			});
+		})
+		.catch(err => {
+			return { err };
+		});
 }
 
 const deleteOrder = (orderObj) => {
