@@ -42,19 +42,21 @@
 
     <div class="cart">
   <b-jumbotron bg-variant="info" text-variant="white" border-variant="dark">
-    <template slot="header">BootstrapVue</template>
-
-    <template slot="lead">
-      This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-      featured content or information.
-    </template>
-
-    <hr class="my-4">
-
-    <p>
-      It uses utility classes for typography and spacing to space content out within the larger
-      container.
-    </p>
+    <GmapMap
+        :center="{lat:35.682457, lng:139.754403}"
+        :zoom="12"
+        map-type-id="terrain"
+        style="width:300px; height:300px;"
+      >
+      <!-- <GmapMarker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="true"
+        @click="center=m.position"
+      /> -->
+      </GmapMap>
   </b-jumbotron>
 </div>
 
@@ -67,7 +69,7 @@
 
       <div
             v-for="item in items"
-            :key="item.key"
+            :key="item.id"
             href="#"
             class="flex-column align-items-start"
         >
@@ -139,7 +141,7 @@ export default {
     OrderItem
   },
   computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
-  mounted: function() {
+  mounted: async function() {
     const APIKEY="AIzaSyBJe_XQPh2vCGMUFZHeNclj2enU5xN9aOE"
     axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid='+ 
 item + '&key=${APIKEY}`)
@@ -149,27 +151,51 @@ item + '&key=${APIKEY}`)
      console.log(err.response.data.error) //Google API error message 
    })
 
+   await axios.get('/api/orders')
+    .then((response) => {
+      this.$store.state.openOrderedItems = response.data
+      // console.log("open orders", this.$store.state.openOrderedItems)
+    })
 
   },
   data: () => ({
-    items: [
-      { key: 1, one: "qwer", two: "poi", three: "1234", four: "098^"},
-      { key: 2, one: "owetjhwi3t", two: "poi", three: "1234", four: "098^"}
-    ],
+    items: 
+    this.$store.state.openOrderedItems,
+    // [
+    //   { id: 35,
+    // purchaser: 'test@gmail.com',
+    // staff: 'none',
+    // fulfilled: false,
+    // price: 350 },
+    // { id: 36,
+    // purchaser: 'test@gmail.com',
+    // staff: 'none',
+    // fulfilled: false,
+    // price: 575 }
+    // ],
     selectedOrders: [],
     isActive: {},
     addresses: [' 6 Chome-11-1 Roppongi, Minato City, Tokyo 106-6108', 
     'B2 Vort, 3 Chome-1-35 Motoazabu, Minato City, Tokyo 106-0046',
     '1 Chome-14-1 Tamagawa, Setagaya City, Tokyo 158-0094',
     '1 Chome-3-61 Koraku, Bunkyo City, Tokyo 112-0004',
-    '1 Chome-3-3 Motoazabu, Minato City, Tokyo 106-0046' ]
+    '1 Chome-3-3 Motoazabu, Minato City, Tokyo 106-0046' ],
+    geolocation: [{latitude: 35.705572, longitude: 139.751878}, 
+    {latitude: 35.678634, longitude: 139.76532},
+    {latitude: 35.659842, longitude: 139.740922},
+    {latitude: 35.662457, longitude: 139.732618},
+    {latitude: 35.660783, longitude: 139.707985},
+    {latitude: 35.675287, longitude: 139.706783},
+    {latitude: 35.699407, longitude: 139.727554},
+    {latitude: 35.691322, longitude: 139.805832},
+    {latitude: 35.699686, longitude: 139.832611},
+    {latitude: 35.608918, longitude: 139.630823}],
   }),
   methods: {
     getOrderItems: function () {
   //     axios.get('/api/orders')
         
       },
-    
     }
 };
 </script>
@@ -185,5 +211,9 @@ item + '&key=${APIKEY}`)
   float: right;
   padding-left: 5vw;
   padding-right: 5vw;
+}
+gmap {
+  width: 200px;
+  height: 200px;
 }
 </style>

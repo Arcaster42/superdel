@@ -1,11 +1,11 @@
 <template>
         <b-list-group-item @click="itemClick(item)" :variant="variant">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{item.one}}</h5>
-                <small class="text-muted">{{item.two}}</small>
+                <h5 class="mb-1">{{item.purchaser}}</h5>
+                <small class="text-muted">{{item.staff}}</small>
             </div>
-            <p class="mb-1">{{item.three}}</p>
-            <small class="text-muted">{{item.four}}</small>
+            <p class="mb-1">{{item.fulfilled}}</p>
+            <small class="text-muted">{{item.price}}</small>
         </b-list-group-item>
 </template>
 
