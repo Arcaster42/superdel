@@ -3,9 +3,10 @@
     <b-container class="h-100">
         <b-row class="h-50 align-items-center justify-content-center text-center">
           <b-col class="col-lg-10 align-center">
+            <img class="superdel_img" src="../assets/logo.png" />
             <h1 class="title">SuperDel</h1>
             <hr class="divider my-4">
-            <p class="sub-title">Grocery shopping made easy and accessible for all!</p>
+            <p class="sub-title"><em>Grocery shopping made easy and accessible for all!</em></p>
           </b-col>
         </b-row>
 
@@ -64,8 +65,8 @@ export default {
 <style scoped>
 .hero {
   background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.5), 
-    rgba(0, 0, 0, 0.5)), 
+    linear-gradient(rgba(0, 0, 0, 0.4), 
+    rgba(0, 0, 0, 0.4)), 
     url("../assets/login.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -76,8 +77,15 @@ export default {
 .title {
   color: white;
   font-size: 4rem;
+  font-weight: bold;
 }
 .sub-title {
   color: white;
+  font-size: 2rem;
+}
+
+.superdel_img {
+  width: 80px;
+  height: 80px;
 }
 </style>

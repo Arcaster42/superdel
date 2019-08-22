@@ -3,16 +3,16 @@
         <b-form v-if="currentView === 'DriverForm'">
           <span v-if="error">{{error}}</span>
           <b-form-group>
-            <b-form-input v-model="first_name" type="text" placeholder="Enter your first name" required/>
-            <b-form-input v-model="last_name" type="text" placeholder="Enter your last name" required/>
-            <b-form-input v-model="email" type="text" placeholder="Enter your email" required/>
-            <b-form-input v-model="password" type="password" placeholder="Choose a password" required/>
-            <b-form-input v-model="address" type="text" placeholder="Enter your address" required/>
-            <b-form-input v-model="phone" type="tel" placeholder="Enter your number" required/>
+            <b-form-input class="mb-2" v-model="first_name" type="text" placeholder="Enter your first name" required inline/>
+            <b-form-input class="mb-2" v-model="last_name" type="text" placeholder="Enter your last name" required inline/>
+            <b-form-input class="mb-2"  v-model="email" type="text" placeholder="Enter your email" required/>
+            <b-form-input class="mb-2"  v-model="password" type="password" placeholder="Choose a password" required/>
+            <b-form-input class="mb-2"  v-model="address" type="text" placeholder="Enter your address" required/>
+            <b-form-input class="mb-2"  v-model="phone" type="tel" placeholder="Enter your number" required/>
           </b-form-group>
           <div class="text-center">
             <b-button variant="primary" block @click="registerClick">Register</b-button>
-            <b-button @click="homeClick" variant="outline-info mt-4">Go Home</b-button>
+            <b-button @click="homeClick" variant="outline-info mt-2">Go Home</b-button>
           </div>
         </b-form>
         <div v-if="currentView === 'Thanks'" class="text-center text-white">
