@@ -211,7 +211,7 @@ export default {
     productView: "Italian",
     groceryItems: {
       italian: [
-      { productTitle: '牛乳', photo: milk, productDetails: 'Local Organic Whole Milk', productPrice: 180},
+      { productTitle: 'オリブオイル', photo: olive, productDetails: 'Straight from Italy', productPrice: 500},
       { productTitle: 'チーズ', photo: mozza, productDetails: 'Fresh Italian Mozzarella', productPrice: 800},
       { productTitle: 'トマト', photo: tomato, productDetails: 'Juicy Heirloom Tomatoes', productPrice: 150},
       { productTitle: 'パスタ', photo: pasta, productDetails: 'Organic Wheat Pasta', productPrice: 300},
@@ -220,7 +220,7 @@ export default {
     ],
     basics: [
       { productTitle: '卵', photo: eggs, productDetails: 'Free Range Organic', productPrice: 150},
-      { productTitle: 'オリブオイル', photo: olive, productDetails: 'Straight from Italy', productPrice: 500},
+      { productTitle: '牛乳', photo: milk, productDetails: 'Local Organic Whole Milk', productPrice: 180},
       { productTitle: 'お米', photo: rice, productDetails: 'Fresh Rice', productPrice: 850},
       { productTitle: '塩', photo: salt, productDetails: 'Generic Salt', productPrice: 300},
       { productTitle: 'ブラックペッパー', photo: pepper, productDetails: 'Generic Pepper', productPrice: 350},
