@@ -37,6 +37,19 @@
         <hr class="divider my-4" />
         <h1 class="text-black font-weight-bold">Welcome, {{user.first_name}}</h1>
         <hr class="divider my-4" />
+
+
+        <b-alert v-model="showDismissibleAlert" variant="success" dismissible>
+          <h2 class="alert-heading">Success!</h2>
+      Checkout Received! You will receive a message when a driver accepts. Thank you!
+    </b-alert>
+
+    <b-alert v-model="showDismissibleAlertFail" variant="success" dismissible>
+          <h2 class="alert-heading">Success!</h2>
+      Checkout Received! You will receive a message when a driver accepts. Thank you!
+    </b-alert>
+
+
       </div>
     </div>
 
@@ -48,7 +61,6 @@
       <b-card-text>
         Thank you for shopping with us, {{user.first_name}}!
         <b-card-text class="text-muted" >Total: {{this.cartTotal}}</b-card-text>
-        <b-card-text v-if="error !== null">{{error}}</b-card-text>
         <div class="float-right">
         <b-button href="#" variant="primary" @click="checkout">Checkout</b-button>
         </div>
@@ -199,30 +211,32 @@ export default {
     productView: "Italian",
     groceryItems: {
       italian: [
-      { productTitle: '牛乳', photo: milk, productDetails: 'poi', productPrice: 180},
-      { productTitle: 'チーズ', photo: mozza, productDetails: 'poi', productPrice: 800},
-      { productTitle: 'トマト', photo: tomato, productDetails: 'poi', productPrice: 150},
-      { productTitle: 'パスタ', photo: pasta, productDetails: 'poi', productPrice: 300},
-      { productTitle: 'バジル', photo: basil, productDetails: 'poi', productPrice: 25},
-      { productTitle: 'トマトソース', photo: sauce, productDetails: 'poi', productPrice: 500},
+      { productTitle: '牛乳', photo: milk, productDetails: 'Local Organic Whole Milk', productPrice: 180},
+      { productTitle: 'チーズ', photo: mozza, productDetails: 'Fresh Italian Mozzarella', productPrice: 800},
+      { productTitle: 'トマト', photo: tomato, productDetails: 'Juicy Heirloom Tomatoes', productPrice: 150},
+      { productTitle: 'パスタ', photo: pasta, productDetails: 'Organic Wheat Pasta', productPrice: 300},
+      { productTitle: 'バジル', photo: basil, productDetails: 'Fresh Milanese Basil', productPrice: 25},
+      { productTitle: 'トマトソース', photo: sauce, productDetails: 'Organic Basil Tomato Sauce', productPrice: 500},
     ],
     basics: [
-      { productTitle: '卵', photo: eggs, productDetails: 'poi', productPrice: 150},
-      { productTitle: 'オリブオイル', photo: olive, productDetails: 'poi', productPrice: 500},
-      { productTitle: 'お米', photo: rice, productDetails: 'poi', productPrice: 850},
-      { productTitle: '塩', photo: salt, productDetails: 'poi', productPrice: 300},
-      { productTitle: 'ブラックペッパー', photo: pepper, productDetails: 'poi', productPrice: 350},
-      { productTitle: '水', photo: water, productDetails: 'poi', productPrice: 200}
+      { productTitle: '卵', photo: eggs, productDetails: 'Free Range Organic', productPrice: 150},
+      { productTitle: 'オリブオイル', photo: olive, productDetails: 'Straight from Italy', productPrice: 500},
+      { productTitle: 'お米', photo: rice, productDetails: 'Fresh Rice', productPrice: 850},
+      { productTitle: '塩', photo: salt, productDetails: 'Generic Salt', productPrice: 300},
+      { productTitle: 'ブラックペッパー', photo: pepper, productDetails: 'Generic Pepper', productPrice: 350},
+      { productTitle: '水', photo: water, productDetails: 'Glacial Water From French Alps', productPrice: 200}
     ],
     japanese: [
-      { productTitle: 'とんかつソース', photo: bulldog, productDetails: 'poi', productPrice: 250},
-      { productTitle: '海苔', photo: seaweed, productDetails: 'poi', productPrice: 160},
-      { productTitle: '納豆', photo: natto, productDetails: 'poi', productPrice: 90},
-      { productTitle: 'お茶', photo: tea, productDetails: 'poi', productPrice: 750},
-      { productTitle: 'みそ', photo: miso, productDetails: 'poi', productPrice: 600},
-      { productTitle: '豆腐', photo: tofu, productDetails: 'poi', productPrice: 120}
+      { productTitle: 'とんかつソース', photo: bulldog, productDetails: 'Tonaktsu Sauce', productPrice: 250},
+      { productTitle: '海苔', photo: seaweed, productDetails: 'From Hokkaido', productPrice: 160},
+      { productTitle: '納豆', photo: natto, productDetails: 'From Nagano', productPrice: 90},
+      { productTitle: 'お茶', photo: tea, productDetails: 'From China', productPrice: 750},
+      { productTitle: 'みそ', photo: miso, productDetails: 'From Japan', productPrice: 600},
+      { productTitle: '豆腐', photo: tofu, productDetails: 'Made this morning', productPrice: 120}
     ]},
-    error: null
+    error: null,
+    showDismissibleAlert: false,
+    showDismissibleAlertFail: false,
   }),
   methods: {
     itemClick: function(item) {
@@ -237,6 +251,7 @@ export default {
       this.$store.commit('emptyCheckoutItems')
       console.log("check", response.data)
         if(response.data.err) {
+          this.showDismissibleAlertFail = true
           this.error = "We couldn't process your order. Click Checkout to try again."
         }
         if(response.data[0]){
@@ -244,6 +259,7 @@ export default {
           this.cartQuantities=[]
           this.cartTotal=0
           this.productView=='Italian'
+          this.showDismissibleAlert = true
         }
       })
       //axios call using with store data, also empty the store with mutation
