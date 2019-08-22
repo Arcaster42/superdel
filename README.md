@@ -171,18 +171,35 @@ Returned
 Expected
 - orderObj
     - order_id (orderId),
-    - product_name (item),
-    - quantity (int)
 
 Returned
 - orderObj
     - order_id (orderId),
     - product_name (item),
-    - quan
+    - quantity
+    - price
 
-/api/orders - name (item),
+/api/orders - GET
 -----------------
+Expected
+- driverObj
+
+Returned
+- Array(orderObj)
 
 /api/order - PATCH
------------------T
-------api        /api/order/api/order
+------------------
+Expected
+- {driverObj, orderObj}
+
+Returned
+- id (number)
+
+/api/order/fulfill - PATCH
+--------------------------
+Expected
+- {driverObj, orderObj}
+
+Returned
+- id (number)
+
