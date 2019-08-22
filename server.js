@@ -17,6 +17,10 @@ const {
     fulfillOrder
 } = require('./queries')
 
+app.get('/api', (req, res) => {
+    res.sendStatus(200)
+})
+
 app.post('/api/users', (req, res) => {
     const userObj = req.body
     registerUser(userObj)
