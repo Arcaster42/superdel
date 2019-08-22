@@ -7,7 +7,9 @@ exports.up = function(knex) {
 			t.string('address')
 			t.string('pass_hash')
 			t.boolean('staff')
-			//t.string('phone')
+			t.string('phone')
+			t.float('lat')
+			t.float('lon')
 		})
 	}
 
@@ -16,8 +18,9 @@ exports.up = function(knex) {
 			t.increments()
 				.index()
 			t.string('purchaser').references('users.email')
-			t.string('staff').references('users.email')
+			t.string('staff')
 			t.boolean('fulfilled')
+			t.integer('price')
 		})
 	}
 
@@ -29,6 +32,7 @@ exports.up = function(knex) {
 				.onDelete('CASCADE')
 			t.string('product_name')
 			t.integer('quantity')
+			t.integer('unit_price')
 		})
 	}
 

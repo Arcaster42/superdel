@@ -70,11 +70,18 @@ yarn frontend
 users
 -----
 email (string)
+
 first_name (string)
+
 last_name (string)
+
 address (string)
+
 pass_hash (string)
+
 staff (boolean)
+
+phone (string)
 
 orders
 ------
@@ -86,6 +93,8 @@ staff (string) -> users.email
 
 fulfilled (boolean)
 
+price (integer)
+
 ordered_items
 -------------
 id (integer)
@@ -95,6 +104,8 @@ order_id (integer) -> orders.id
 product_name (string)
 
 quantity (integer)
+
+unit_price (integer)
 
 ## API
 
@@ -146,7 +157,7 @@ Expected
 
 - orderObj
     - items (Array)
-    - quantity (Array)
+    - quantity (Arr
 
 Returned
 - orderedItems (Array)
@@ -163,15 +174,15 @@ Expected
     - product_name (item),
     - quantity (int)
 
-Returned'
+Returned
 - orderObj
     - order_id (orderId),
     - product_name (item),
-    - quantity (int)
+    - quan
 
-/api/orders - GET
+/api/orders - name (item),
 -----------------
 
 /api/order - PATCH
------------------
-     
+-----------------T
+------api        /api/order/api/order
