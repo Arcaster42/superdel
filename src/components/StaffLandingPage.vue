@@ -39,7 +39,27 @@
       </div>
     </div>
 
+
+    <div class="cart">
+  <b-jumbotron bg-variant="info" text-variant="white" border-variant="dark">
+    <template slot="header">BootstrapVue</template>
+
+    <template slot="lead">
+      This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+      featured content or information.
+    </template>
+
+    <hr class="my-4">
+
+    <p>
+      It uses utility classes for typography and spacing to space content out within the larger
+      container.
+    </p>
+  </b-jumbotron>
+</div>
+
     <!-- ALL ORDERS -->
+    <div class="options">
     <div v-if="driverView === 'all'">
       <b-col lg="4" class="pb-2">
         <b-button size="lg" @click="$store.commit('sendSelectedOrders', driverSelectedOrders)">SuperDel Selected Order(s)</b-button>
@@ -56,7 +76,9 @@
 
     </div>
 
+
     <!-- MY ORDERS -->
+    
     <div v-if="driverView === 'my'">
       <b-list-group-item
         v-for="item in driverMyOrders"
@@ -72,6 +94,7 @@
         <small class="text-muted">{{item.four}}</small>
       </b-list-group-item>
     </div>
+
 
     <!-- COMPLETED ORDERS -->
     <div v-if="driverView === 'completed'">
@@ -99,12 +122,16 @@
       <small class="text-muted">¥3,500</small>
     </b-list-group-item>
   </div>
+
+  </div>
+
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import OrderItem from './OrderItem'
+import axios from 'axios';
+import OrderItem from './OrderItem';
 
 export default {
   name: "StaffLandingPage",
@@ -112,16 +139,51 @@ export default {
     OrderItem
   },
   computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
+  mounted: function() {
+    const APIKEY="AIzaSyBJe_XQPh2vCGMUFZHeNclj2enU5xN9aOE"
+    axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid='+ 
+item + '&key=${APIKEY}`)
+   .then(response => this.setState({placeId:response.data}))
+   .catch(err => {
+     console.log(err)                     //Axios entire error message
+     console.log(err.response.data.error) //Google API error message 
+   })
+
+
+  },
   data: () => ({
     items: [
       { key: 1, one: "qwer", two: "poi", three: "1234", four: "098^"},
       { key: 2, one: "owetjhwi3t", two: "poi", three: "1234", four: "098^"}
     ],
     selectedOrders: [],
-    isActive: {}
+    isActive: {},
+    addresses: [' 6 Chome-11-1 Roppongi, Minato City, Tokyo 106-6108', 
+    'B2 Vort, 3 Chome-1-35 Motoazabu, Minato City, Tokyo 106-0046',
+    '1 Chome-14-1 Tamagawa, Setagaya City, Tokyo 158-0094',
+    '1 Chome-3-61 Koraku, Bunkyo City, Tokyo 112-0004',
+    '1 Chome-3-3 Motoazabu, Minato City, Tokyo 106-0046' ]
   }),
+  methods: {
+    getOrderItems: function () {
+  //     axios.get('/api/orders')
+        
+      },
+    
+    }
 };
 </script>
 
 <style scoped>
+.options{
+  width: 50%;
+  float: left;
+  height:100vh;
+}
+.cart {
+  width:50%;
+  float: right;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
 </style>
