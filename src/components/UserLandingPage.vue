@@ -35,7 +35,7 @@
     <div class="row align-items-center justify-content-center text-center">
       <div class="col-lg-10 align-self-end">
         <hr class="divider my-4" />
-        <h1 class="text-black font-weight-bold">Welcome, {{user}}</h1>
+        <h1 class="text-black font-weight-bold">Welcome, {{user.first_name}}</h1>
         <hr class="divider my-4" />
       </div>
     </div>
@@ -46,8 +46,9 @@
   <b-list-group>
     <b-card bg-variant="dark" text-variant="white" title="Checkout">
       <b-card-text>
-        Thank you for shopping with us, {{user}}!
-        <b-card-text class="text-muted" >Distincts: {{cartItems.length}}</b-card-text>
+        Thank you for shopping with us, {{user.first_name}}!
+        <b-card-text class="text-muted" >Total: {{this.cartTotal}}</b-card-text>
+        <b-card-text v-if="error !== null">{{error}}</b-card-text>
         <div class="float-right">
         <b-button href="#" variant="primary" @click="checkout">Checkout</b-button>
         </div>
@@ -92,10 +93,10 @@
         <b-card-text>
           {{ item.productDetails}}
           <div>
-            <b-card-text class="text-muted float-right" >${{item.productPrice}}</b-card-text>
+            <b-card-text class="text-muted float-right" >¥{{item.productPrice}}</b-card-text>
           </div>
         </b-card-text>
-        <b-button href="#" variant="primary" v-on:click="addItem(item.productTitle)">Add to Cart</b-button>
+        <b-button href="#" variant="primary" v-on:click="addItem(item)">Add to Cart</b-button>
       </b-card>
         </div>
     </b-card-group>
@@ -118,10 +119,10 @@
         <b-card-text>
           {{ item.productDetails}}
           <div>
-            <b-card-text class="text-muted float-right" >${{item.productPrice}}</b-card-text>
+            <b-card-text class="text-muted float-right" >￥{{item.productPrice}}</b-card-text>
           </div>
         </b-card-text>
-        <b-button href="#" variant="primary" v-on:click="addItem(item.productTitle)">Add to Cart</b-button>
+        <b-button href="#" variant="primary" v-on:click="addItem(item)">Add to Cart</b-button>
       </b-card>
         </div>
     </b-card-group>
@@ -144,10 +145,10 @@
         <b-card-text>
           {{ item.productDetails}}
           <div>
-            <b-card-text class="text-muted float-right" >${{item.productPrice}}</b-card-text>
+            <b-card-text class="text-muted float-right" >¥{{item.productPrice}}</b-card-text>
           </div>
         </b-card-text>
-        <b-button href="#" variant="primary" v-on:click="addItem(item.productTitle)">Add to Cart</b-button>
+        <b-button href="#" variant="primary" v-on:click="addItem(item)">Add to Cart</b-button>
       </b-card>
         </div>
     </b-card-group>
@@ -160,6 +161,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import axios from 'axios'
 import basil from '../assets/basil.jpeg'
 import milk from '../assets/milk.jpeg'
 import mozza from '../assets/mozza.jpeg'
@@ -187,36 +189,40 @@ export default {
     ...mapState(['user', 'driverSelectedOrders', 'driverMyOrders']),
     computeCartQuantities: function() {
       return this.cartQuantities
-    }},
+    },
+    },
   data: () => ({
     cartItems: [],
     cartQuantities: [],
+    cartPrices: [],
+    cartTotal: 0,
     productView: "Italian",
     groceryItems: {
       italian: [
-      { productTitle: 'Milk', photo: milk, productDetails: 'poi', productPrice: 2.34},
-      { productTitle: 'Mozarella', photo: mozza, productDetails: 'poi', productPrice: 2.35},
-      { productTitle: 'Tomatoes', photo: tomato, productDetails: 'poi', productPrice: 2.36},
-      { productTitle: 'Pasta', photo: pasta, productDetails: 'poi', productPrice: 2.37},
-      { productTitle: 'Basil', photo: basil, productDetails: 'poi', productPrice: 2.38},
-      { productTitle: 'Sauce', photo: sauce, productDetails: 'poi', productPrice: 2.38},
+      { productTitle: '牛乳', photo: milk, productDetails: 'poi', productPrice: 180},
+      { productTitle: 'チーズ', photo: mozza, productDetails: 'poi', productPrice: 800},
+      { productTitle: 'トマト', photo: tomato, productDetails: 'poi', productPrice: 150},
+      { productTitle: 'パスタ', photo: pasta, productDetails: 'poi', productPrice: 300},
+      { productTitle: 'バジル', photo: basil, productDetails: 'poi', productPrice: 25},
+      { productTitle: 'トマトソース', photo: sauce, productDetails: 'poi', productPrice: 500},
     ],
     basics: [
-      { productTitle: 'Eggs', photo: eggs, productDetails: 'poi', productPrice: 2.34},
-      { productTitle: 'Olive Oil', photo: olive, productDetails: 'poi', productPrice: 2.35},
-      { productTitle: 'Rice', photo: rice, productDetails: 'poi', productPrice: 2.36},
-      { productTitle: 'Salt', photo: salt, productDetails: 'poi', productPrice: 2.37},
-      { productTitle: 'Pepper', photo: pepper, productDetails: 'poi', productPrice: 2.38},
-      { productTitle: 'Water', photo: water, productDetails: 'poi', productPrice: 2.38}
+      { productTitle: '卵', photo: eggs, productDetails: 'poi', productPrice: 150},
+      { productTitle: 'オリブオイル', photo: olive, productDetails: 'poi', productPrice: 500},
+      { productTitle: 'お米', photo: rice, productDetails: 'poi', productPrice: 850},
+      { productTitle: '塩', photo: salt, productDetails: 'poi', productPrice: 300},
+      { productTitle: 'ブラックペッパー', photo: pepper, productDetails: 'poi', productPrice: 350},
+      { productTitle: '水', photo: water, productDetails: 'poi', productPrice: 200}
     ],
     japanese: [
-      { productTitle: 'BullDog Sauce', photo: bulldog, productDetails: 'poi', productPrice: 2.34},
-      { productTitle: 'Seaweed', photo: seaweed, productDetails: 'poi', productPrice: 2.35},
-      { productTitle: 'Natto', photo: natto, productDetails: 'poi', productPrice: 2.36},
-      { productTitle: 'Tea', photo: tea, productDetails: 'poi', productPrice: 2.37},
-      { productTitle: 'Miso', photo: miso, productDetails: 'poi', productPrice: 2.38},
-      { productTitle: 'Tofu', photo: tofu, productDetails: 'poi', productPrice: 2.38}
-    ]}
+      { productTitle: 'とんかつソース', photo: bulldog, productDetails: 'poi', productPrice: 250},
+      { productTitle: '海苔', photo: seaweed, productDetails: 'poi', productPrice: 160},
+      { productTitle: '納豆', photo: natto, productDetails: 'poi', productPrice: 90},
+      { productTitle: 'お茶', photo: tea, productDetails: 'poi', productPrice: 750},
+      { productTitle: 'みそ', photo: miso, productDetails: 'poi', productPrice: 600},
+      { productTitle: '豆腐', photo: tofu, productDetails: 'poi', productPrice: 120}
+    ]},
+    error: null
   }),
   methods: {
     itemClick: function(item) {
@@ -225,26 +231,48 @@ export default {
       this.isActive[item.key] = 1
     },
     checkout: function() {
-      const itemObj = { itemArray: this.cartItems , quantitiesArray: this.cartQuantities}
+      const itemObj = { itemArray: this.cartItems , quantitiesArray: this.cartQuantities, price: this.cartTotal, priceArray: this.cartPrices}
       this.$store.commit('setCheckoutItems', itemObj)
+      axios.post('/api/orders', this.$store.state.checkoutItems).then((response)=>{
+      this.$store.commit('emptyCheckoutItems')
+      console.log("check", response.data)
+        if(response.data.err) {
+          this.error = "We couldn't process your order. Click Checkout to try again."
+        }
+        if(response.data[0]){
+          this.cartItems=[]
+          this.cartQuantities=[]
+          this.cartTotal=0
+          this.productView=='Italian'
+        }
+      })
+      //axios call using with store data, also empty the store with mutation
+      //if err, we reuse with local state to populate the $store
+      //if success, then empty both local state and $store
+
     },
     addItem: function(item) {
       if (this.cartItems.length) {
         for (let i = 0; i <this.cartItems.length; i++) {
-          if (this.cartItems[i] === item) {
+          if (this.cartItems[i] === item.productTitle) {
             this.cartQuantities.splice(i, 1, this.cartQuantities[i] + 1)
+            this.cartPrices.splice(i, 1, item.productPrice)
+            this.cartTotal = this.cartTotal + item.productPrice
             break
           }
           else if (i === this.cartItems.length-1 && this.cartItems[i] !==item) {
-            this.cartItems.push(item)
+            this.cartItems.push(item.productTitle)
+            this.cartPrices.push(item.productPrice)
             this.cartQuantities.push(1)
+            this.cartTotal = this.cartTotal + item.productPrice
             break
           }
         }
       }
       else {
-        this.cartItems.push(item)
+        this.cartItems.push(item.productTitle)
         this.cartQuantities.push(1)
+        this.cartTotal = item.productPrice
       }
     }
   },

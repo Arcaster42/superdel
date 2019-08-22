@@ -36,10 +36,16 @@ export default {
       }
       axios.get('/api/login', { params: userObj })
       .then((response) => {
-        console.log(response)
         if (response.data.err) this.error = response.data.err
-        if (response.data) this.$store.commit('setUser', response.data)
-        //change view, go to user page
+        else if (response.data.email) {
+          console.log("response", response)
+          if (response.data.staff === null){
+            this.$store.commit('setUser', response.data)
+          }
+          else if (response.data.staff == true) {
+            this.$store.commit('setStaff', response.data)
+          }
+        }
       })
     },
     registerClick (e) {
