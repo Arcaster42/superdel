@@ -139,18 +139,6 @@ export default {
     OrderItem
   },
   computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
-  mounted: function() {
-    const APIKEY="AIzaSyBJe_XQPh2vCGMUFZHeNclj2enU5xN9aOE"
-    axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid='+ 
-item + '&key=${APIKEY}`)
-   .then(response => this.setState({placeId:response.data}))
-   .catch(err => {
-     console.log(err)                     //Axios entire error message
-     console.log(err.response.data.error) //Google API error message 
-   })
-
-
-  },
   data: () => ({
     items: [
       { key: 1, one: "qwer", two: "poi", three: "1234", four: "098^"},
