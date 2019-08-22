@@ -5,9 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: 'Ryohei',
+    user: null,
     loginView: 'login',
-    mainView: 'UserLandingPage',
+    mainView: 'StaffLandingPage',
     driverView: 'all',
     driverMyOrders: [],
     driverSelectedOrders: [],

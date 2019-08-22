@@ -49,7 +49,7 @@
         Thank you for shopping with us, {{user}}!
         <b-card-text class="text-muted" >Distincts: {{cartItems.length}}</b-card-text>
         <div class="float-right">
-        <b-button href="#" variant="primary" v-on:click="checkout">Checkout</b-button>
+        <b-button href="#" variant="primary" @click="checkout">Checkout</b-button>
         </div>
       </b-card-text>
     </b-card>
@@ -67,9 +67,9 @@
 <!-- product nav-->
     <div class="options-nav">
       <b-nav pills fill>
-        <b-nav-item v-bind:active="productView === 'Italian'" v-on:click="productView = 'Italian'">Italian</b-nav-item>
-        <b-nav-item v-bind:active="productView === 'Japanese'" v-on:click="productView = 'Japanese'">Japanese</b-nav-item>
-        <b-nav-item v-bind:active="productView === 'Basics'" v-on:click="productView = 'Basics'">Basics</b-nav-item>
+        <b-nav-item :active="productView === 'Italian'" @click="productView = 'Italian'">Italian</b-nav-item>
+        <b-nav-item :active="productView === 'Japanese'" @click="productView = 'Japanese'">Japanese</b-nav-item>
+        <b-nav-item :active="productView === 'Basics'" @click="productView = 'Basics'">Basics</b-nav-item>
       </b-nav>
     </div>
 
