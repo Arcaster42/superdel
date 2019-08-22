@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class="hero">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">SuperDel</b-navbar-brand>
+      <b-navbar-brand href="#">
+        <img src="../assets/logo.png" alt="" height="50px" width="50px">
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#" @click="$store.commit('staffPage', 'all')">All Orders</b-nav-item>
+          <b-nav-item href="#" @click="$store.commit('staffPage', 'all')">All Products</b-nav-item>
           <b-nav-item href="#" @click="$store.commit('staffPage', 'my')">My Orders</b-nav-item>
-          <b-nav-item href="#" @click="$store.commit('staffPage', 'completed')">Completed</b-nav-item>
-          <b-nav-item href="#">Map</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -296,6 +296,17 @@ export default {
 </script>
 
 <style scoped>
+.hero {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.8), 
+    rgba(0, 0, 0, 0.8)), 
+    url("../assets/userLandingPage.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 180%;
+}
 .options{
   width: 50%;
   float: left;
