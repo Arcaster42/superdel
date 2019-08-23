@@ -89,7 +89,7 @@
 <!-- USER ORDER Card-->
     <div class="options">
 <!-- USER ORDER Italian-->
-    <div class="product-view" v-if="productView==='Italian'">
+    <div v-if="productView==='Italian'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.italian" v-bind:key="index">
       <b-card
@@ -115,7 +115,7 @@
   </div>
 
 <!-- USER ORDER Japanese-->
-  <div class="product-view" v-if="productView==='Japanese'">
+  <div v-if="productView==='Japanese'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.japanese" v-bind:key="index">
       <b-card
@@ -141,7 +141,7 @@
   </div>
   
   <!-- USER ORDER Basics-->
-<div class="product-view" v-if="productView==='Basics'">
+<div v-if="productView==='Basics'">
     <b-card-group columns>
       <div v-for="(item, index) in groceryItems.basics" v-bind:key="index">
       <b-card
@@ -296,13 +296,7 @@ export default {
 </script>
 
 <style scoped>
-html, body {
-  height: 100%;
-  width: 100%;
-}
 .hero {
-  height: 130%;
-  width: 100%;
   background-image: 
     linear-gradient(rgba(0, 0, 0, 0.8), 
     rgba(0, 0, 0, 0.8)), 
@@ -311,16 +305,7 @@ html, body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-}
-.product-view {
-  background: #343a40;
-  border-radius: 10px;
-  padding: 15px;
-  margin-left: 15px;
-  max-height: 900px;
-  width: 825px;
-  overflow: auto;
-
+  height: 180%;
 }
 .options{
   width: 50%;
@@ -336,12 +321,5 @@ html, body {
 .options-nav{
   width: 100%;
   padding-bottom: 5vh;
-  background: #343a40;
-  border-radius: 10px;
-  height: 1%;
-  width: 49%;
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: 15px;
 }
 </style>
