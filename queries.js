@@ -11,7 +11,7 @@ const registerUser = (userObj) => {
             return new Promise((resolve, reject) => {
                 bcrypt.hash(userObj.password, 10, (err, hash) => {
                     if (err) reject(err)
-                    return db('users').insert({ email: userObj.email, pass_hash: hash })
+                    return db('users').insert({ email: userObj.email, pass_hash: hash, first_name: userObj.first_name, last_name: userObj.last_name, address: userObj.address })
                         .then(() => {
                             resolve(userObj)
                         })
@@ -45,22 +45,22 @@ const loginUser = (userObj) => {
 
 const createOrder = (orderObj) => {
   console.log(orderObj)
-  return db("orders")
+  return db('orders')
 		.insert(
 			{
 				purchaser: orderObj.email,
-				staff: "none",
+				staff: 'none',
 				fulfilled: false,
 				price: orderObj.price
 			},
-			["id"]
+			['id']
 		)
 		.then(orderId => {
-      console.log("orderID", orderId)
+      console.log('orderID', orderId)
 			return Promise.all(
 				orderObj.itemArray.map((item, index) => {
-					return db("ordered_items").insert({
-						order_id: orderId[0]["id"],
+					return db('ordered_items').insert({
+						order_id: orderId[0]['id'],
 						product_name: item,
             quantity: orderObj.quantitiesArray[index],
             unit_price: orderObj.priceArray[index]
@@ -118,8 +118,7 @@ const acceptOrder = (driverObj, orderObj) => {
 				return { err }
       })
     }
-      return new Promise((resolve, reject)=>resolve({err: 'must be staff to accept order'}))
-
+      return new Promise((resolve, reject) => resolve({err: 'must be staff to accept order'}))
     }
 
  
