@@ -172,12 +172,6 @@ export default {
     {position: {lat: 35.678634, lng: 139.76532}},
     {position: {lat: 35.659842, lng: 139.740922}},
     {position: {lat: 35.662457, lng: 139.732618}},
-    {position: {lat: 35.660783, lng: 139.707985}},
-    {position: {lat: 35.675287, lng: 139.706783}},
-    {position: {lat: 35.699407, lng: 139.727554}},
-    {position: {lat: 35.691322, lng: 139.805832}},
-    {position: {lat: 35.699686, lng: 139.832611}},
-    {position: {lat: 35.608918, lng: 139.630823}}
     ],
   }),
   methods: {
