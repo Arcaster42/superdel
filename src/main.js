@@ -11,11 +11,7 @@ require('dotenv').config()
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
-<<<<<<< HEAD
     key: "AIzaSyDuf5lhIPGNM0BWS8M-LdYtLk3b9IgUd8Y"
-=======
-    key: 'AIzaSyDuf5lhIPGNM0BWS8M-LdYtLk3b9IgUd8Y'
->>>>>>> 289d24287c8f0a56494a5d5e026843b2ab6d7f3c
   }
 })
 
