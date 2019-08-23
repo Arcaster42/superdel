@@ -102,6 +102,8 @@ const getOpenOrders  = () => {
     }
 
 const acceptOrder = (driverObj, orderObj) => {
+  console.log('ACCEPT API CALLED')
+  console.log(driverObj)
   if (driverObj.staff) {
     return db('orders')
 			.where('id', orderObj.id)
