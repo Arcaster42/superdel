@@ -6,12 +6,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-require('dotenv').config({path: '../.env'})
+require('dotenv').config()
 
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: process.env.MAPS_API_KEY
+    key: 'AIzaSyDuf5lhIPGNM0BWS8M-LdYtLk3b9IgUd8Y'
   }
 })
 
