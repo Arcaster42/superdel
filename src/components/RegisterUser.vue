@@ -7,6 +7,7 @@
             <b-form-input class="mb-2" v-model="email" type="text" placeholder="Enter your email" required/>
             <b-form-input class="mb-2" v-model="password" type="password" placeholder="Choose a password" required/>
             <b-form-input class="mb-2" v-model="address" type="text" placeholder="Enter your address" required/>
+            <b-form-input class="mb-2" v-model="phone" type="tel" placeholder="Enter your phone number" required/>
           </b-form-group>
           <div class="text-center">
             <b-button variant="primary" block @click="registerClick">Register</b-button>
@@ -26,7 +27,8 @@ export default {
     last_name: null,
     address: null,
     password: null,
-    error: null
+    error: null,
+    phone: null
   }),
   methods: {
     homeClick () {
@@ -39,7 +41,8 @@ export default {
         first_name: this.first_name,
         last_name: this.last_name,
         address: this.address,
-        password: this.password
+        password: this.password,
+        phone: this.phone
       }
       axios.post('/api/users', userObj)
       .then((response) => {
