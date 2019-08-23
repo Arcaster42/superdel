@@ -11,7 +11,7 @@ require('dotenv').config()
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyDuf5lhIPGNM0BWS8M-LdYtLk3b9IgUd8Y'
+    key: "AIzaSyDuf5lhIPGNM0BWS8M-LdYtLk3b9IgUd8Y"
   }
 })
 

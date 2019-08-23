@@ -32,13 +32,14 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-
+    <div class="container">
     <div class="row align-items-center justify-content-center text-center">
       <div class="col-lg-10 align-self-end">
         <hr class="divider my-4" />
-        <h1 class="text-white font-weight-bold">Welcome, Driver!</h1>
+        <h1 class="text-white font-weight-bold">Welcome, {{user.first_name}}!</h1>
         <hr class="divider my-4" />
       </div>
+    </div>
     </div>
 
 
@@ -107,29 +108,31 @@
 
     <!-- COMPLETED ORDERS -->
     <div v-if="driverView === 'completed'">
-    <b-list-group-item
-      href="#"
-      class="flex-column align-items-start"
-    >
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">ONE</h5>
-        <small class="text-muted">3 minutes ago</small>
+      <div class="order-container">
+        <b-list-group-item
+          href="#"
+          class="flex-column align-items-start"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Ordered by: John@gmail.com</h5>
+            <small class="text-muted">20 hours ago</small>
+          </div>
+          <p class="mb-1">Egg, Milk, Tea</p>
+          <small class="text-muted">¥1,000</small>
+        </b-list-group-item>
+        <b-list-group-item
+          v-if="driverView === 'completed'"
+          href="#"
+          class="flex-column align-items-start"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Ordered by: John@gmail.com</h5>
+            <small class="text-muted">5 hours ago</small>
+          </div>
+          <p class="mb-1">Basil, Tomato, Milk, Eggs, Cheese</p>
+          <small class="text-muted">¥3,500</small>
+        </b-list-group-item>
       </div>
-      <p class="mb-1">Egg, Milk, Tea</p>
-      <small class="text-muted">¥3,500</small>
-    </b-list-group-item>
-    <b-list-group-item
-      v-if="driverView === 'completed'"
-      href="#"
-      class="flex-column align-items-start"
-    >
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">TWO</h5>
-        <small class="text-muted">3 minutes ago</small>
-      </div>
-      <p class="mb-1">Egg, Milk, Tea</p>
-      <small class="text-muted">¥3,500</small>
-    </b-list-group-item>
   </div>
 
   </div>
@@ -147,7 +150,7 @@ export default {
   components: {
     OrderItem
   },
-  computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders"]),
+  computed: mapState(["driverView", "driverSelectedOrders", "driverMyOrders", "user"]),
   mounted: async function() {
     await axios.get('/api/orders')
     .then((response) => {
@@ -157,18 +160,6 @@ export default {
   },
   data: () => ({
     items: [],
-    // [
-    //   { id: 35,
-    // purchaser: 'test@gmail.com',
-    // staff: 'none',
-    // fulfilled: false,
-    // price: 350 },
-    // { id: 36,
-    // purchaser: 'test@gmail.com',
-    // staff: 'none',
-    // fulfilled: false,
-    // price: 575 }
-    // ],
     selectedOrders: [],
     isActive: {},
     addresses: [' 6 Chome-11-1 Roppongi, Minato City, Tokyo 106-6108', 
